@@ -20,7 +20,7 @@ def ask(body: Question):
             "answer": "Your question cannot be processed",
             "session_id": body.session_id,
             "citations": [],
-            "guardrail_fail": True,
+            "guardrail_failed": True,
             "reason": check.reason,
             }
     history = get_session_history(session_id)
@@ -33,10 +33,19 @@ def ask(body: Question):
         search_query = body.text
 
 
-    db_retriever = db.as_retriever(search_kwargs={"k": 6})
-    vector_results = db_retriever.invoke(search_query)
+    vector_results = db.similarity_search_with_score(search_query, k=6)
     bm25_results = bm25.invoke(search_query)
-    results = reciprocal_rank_fusion(vector_results, bm25_results,k=60)
+    results, best_score = reciprocal_rank_fusion(vector_results, bm25_results,k=60)
+
+    if best_score > 0.7:
+        return {
+             "question": body.text,
+            "answer": "I don't have sufficient information in the provided documents to answer this.",
+            "session_id": body.session_id,
+            "citations": [],
+            "guardrail_failed": False,
+            "reason": "Low retrieval confidence",
+        }
 
     context_list = []
     citations = []

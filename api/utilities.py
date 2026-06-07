@@ -4,20 +4,21 @@ def reciprocal_rank_fusion(vector_results, bm25_results, k=60):
     scores = {}
     content = {}
 
-    for rank, doc in enumerate(vector_results):
+    for rank, (doc, score) in enumerate(vector_results):
         key = doc.page_content
         scores[key] = scores.get(key, 0) + 1/(rank + k)
         content[key] = doc
 
     for rank,doc in enumerate(bm25_results):
         key = doc.page_content
-        scores["key"] = scores.get(key, 0) + 1/(rank + k)
-        content["key"] = doc
+        scores[key] = scores.get(key, 0) + 1/(rank + k)
+        content[key] = doc
 
     sorted_results = sorted(scores, key=lambda x:scores[x], reverse=True)
     result = [content[key] for key in sorted_results[:3]]
+    best_score = min(score for doc, score in vector_results) if vector_results else 1.0
 
-    return result
+    return result, best_score
 
 def normalize_query(history, user_query):
 
