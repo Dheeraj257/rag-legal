@@ -19,8 +19,8 @@ def load_csv(file_path):
             page_content=content,
             metadata={
                 "source": file_name,
-                "citation": f"{file_name}: {idx+2}"
-            }
+                "citation":idx+2
+                }
         ))
 
     return csv_doc

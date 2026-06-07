@@ -80,8 +80,7 @@ def load_pdf(file_path):
                     metadata={
                         "source": file_name,
                         "page": page_num,
-                        "type": element["type"],
-                        "citation": f"{file_name}: {page_num}"
+                        "type": element["type"]
                     }
                 ))
   

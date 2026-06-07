@@ -19,3 +19,5 @@ rag_chroma_db/
 Thumbs.db 
 
 test_doc/
+pipeline/
+your_file.txt

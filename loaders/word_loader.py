@@ -35,8 +35,7 @@ def load_doc(file_path):
                         metadata={
                             "source": file_name,
                             "para": current_para,
-                            "heading": current_heading,
-                            "citation": f"{file_name}: {current_para}" 
+                            "heading": current_heading
                         }
                     ))
                 current_heading = text
@@ -50,9 +49,8 @@ def load_doc(file_path):
                         metadata={
                             "source": file_name,
                             "para": current_para,
-                            "heading": current_heading,
-                            "citation": f"{file_name}: {current_para}"
-                        }
+                            "heading": current_heading
+                            }
                     ))
                 current_heading = text
                 current_para = text
@@ -67,8 +65,7 @@ def load_doc(file_path):
                         metadata={
                             "source": file_name,
                             "para": current_para,
-                            "heading": current_heading,
-                            "citation": f"{file_name}: {current_para}"
+                            "heading": current_heading
                         }
                     ))
             para_buffer = []
@@ -93,8 +90,7 @@ def load_doc(file_path):
                         metadata={
                             "source": file_name,
                             "para": current_para,
-                            "heading": current_heading,
-                            "citation": f"{file_name}: {current_para}"
+                            "heading": current_heading
                         }
                     ))
     return word_doc
