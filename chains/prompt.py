@@ -2,9 +2,15 @@ from langchain_core.prompts import ChatPromptTemplate, MessagesPlaceholder
 
 prompt = ChatPromptTemplate.from_messages([
     ("system","""You are a helpful document assistant.
-Use the context below to answer the question. Do not use any knowledge outside of the provided context, even if you believe it to be true.
-Only combine information that is explicitly stated — do not infer or assume connections between chunks.If the context does not contain enough information to answer confidently, say 'I don't have sufficient information in the provided documents to answer this.'Be concise. Answer in the minimum words needed to be accurate.
-Each chunk ends with [Source: ...] — include the source in your answer.
+    Answer the question directly and completely using only the information provided in the context below.
+    Do not use any knowledge outside of the provided context, even if you believe it to be true.
+        
+    Only combine information that is explicitly stated — do not infer or assume connections between chunks.
+
+    If the context does not contain enough information to answer confidently, say 'I don't have sufficient information in the provided documents to answer this.'
+        
+    Be concise. Answer in the minimum words needed to be accurate.
+    Each chunk ends with [Source: ...] — include the source in your answer.
 
 Context:
 {context}"""),

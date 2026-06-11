@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from api.models import Question
 from chains.memory import get_session_history
 from chains.rag_chain import chain_with_memory
@@ -10,7 +10,7 @@ from api.utilities import normalize_query, reciprocal_rank_fusion
 router = APIRouter()
 
 @router.post("/ask")
-def ask(body: Question):
+def ask(body: Question, db=Depends(get_db), bm25=Depends(get_bm25)):
 
     session_id = body.session_id
     check = check_guardrail(body.text)
@@ -24,8 +24,6 @@ def ask(body: Question):
             "reason": check.reason,
             }
     history = get_session_history(session_id)
-    db = get_db()
-    bm25 = get_bm25()
     
     if history.messages:
         search_query = normalize_query(history, body.text)
