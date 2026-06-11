@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 from langchain_core.output_parsers import StrOutputParser
-from chains.prompt import prompt, question_prompt, guardrail_prompt
+from chains.prompt import prompt, question_prompt, guardrail_prompt, eval_prompt
 from chains.memory import build_chain_with_memory
 from dotenv import load_dotenv
 from api.models import LLMGuardrailCheck
@@ -24,3 +24,5 @@ question_chain = question_prompt | llm_question | parser
 structure_LLM_check = guardrail_model.with_structured_output(LLMGuardrailCheck)
 
 guardrail_chain = guardrail_prompt | structure_LLM_check
+
+eval_chain = eval_prompt | llm | parser
