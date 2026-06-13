@@ -8,6 +8,7 @@ venv/
 
 chroma_db/
 rag_chroma_db/
+bm25_index.pkl
 
 .vscode/
 
