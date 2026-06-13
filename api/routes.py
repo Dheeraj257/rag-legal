@@ -13,7 +13,13 @@ router = APIRouter()
 def ask(body: Question, db=Depends(get_db), bm25=Depends(get_bm25)):
 
     session_id = body.session_id
-    check = check_guardrail(body.text)
+    history = get_session_history(session_id)
+    
+    if history.messages:
+        search_query = normalize_query(history, body.text)
+    else:
+        search_query = body.text
+    check = check_guardrail(search_query)
     if not check.passed:
         return {
             "question": body.text,
@@ -23,12 +29,6 @@ def ask(body: Question, db=Depends(get_db), bm25=Depends(get_bm25)):
             "guardrail_failed": True,
             "reason": check.reason,
             }
-    history = get_session_history(session_id)
-    
-    if history.messages:
-        search_query = normalize_query(history, body.text)
-    else:
-        search_query = body.text
 
 
     vector_results = db.similarity_search_with_score(search_query, k=6)
@@ -37,7 +37,7 @@ def ask(body: Question, db=Depends(get_db), bm25=Depends(get_bm25)):
 
     if best_score > 0.7:
         return {
-             "question": body.text,
+            "question": body.text,
             "answer": "I don't have sufficient information in the provided documents to answer this.",
             "session_id": body.session_id,
             "citations": [],

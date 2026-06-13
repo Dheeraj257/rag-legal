@@ -16,7 +16,7 @@ docs = process_folder("test_doc")
 db = build_vector_store(docs)
 bm25 = build_bm25_store(docs)
 
-with open("golden_dataset.json", "r") as file:
+with open("evaluation_files/golden_dataset.json", "r") as file:
     data = json.load(file)
 
 questions = data["samples"]
@@ -56,4 +56,4 @@ scores = evaluate(
     embeddings=ragas_embeddings)
 
 df = scores.to_pandas()
-df.to_csv("evaluation_score.csv",index=False)
+df.to_csv("evaluation_files/evaluation_score.csv",index=False)

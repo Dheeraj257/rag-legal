@@ -7,11 +7,11 @@ from api.models import LLMGuardrailCheck
 
 load_dotenv()
 
-llm = ChatOpenAI()
+llm = ChatOpenAI(temperature=0)
 
-llm_question = ChatOpenAI(model="gpt-4o-mini")
+llm_question = ChatOpenAI(temperature=0, model="gpt-4o-mini")
 
-guardrail_model = ChatOpenAI(model="gpt-4o-mini")
+guardrail_model = ChatOpenAI(temperature=0, model="gpt-4o-mini")
 
 parser = StrOutputParser()
 

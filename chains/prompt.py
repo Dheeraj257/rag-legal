@@ -18,7 +18,7 @@ MessagesPlaceholder("history"),
  ("human","{question}") ])
 
 question_prompt = ChatPromptTemplate.from_messages([
-    ("system", """You are an agent whose work is to take the previous context history and the present question and generate a meaningful follow up question for the LLM to understand and retrieve"""),
+    ("system", """You are an agent that rewrites the user's current question into a clear, standalone search query using the conversation history for context. Do not ask clarifying questions. Output only the rewritten search query, nothing else."""),
     ("human", "Previous context: {last}\n\nCurrent question: {user_query}")])
 
 guardrail_prompt = ChatPromptTemplate.from_messages([
